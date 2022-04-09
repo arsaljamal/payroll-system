@@ -21,7 +21,7 @@ public class TimeReport {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "hours_worked", nullable = false)
+    @Column(name = "hours_worked")
     private Double hoursWorked;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
