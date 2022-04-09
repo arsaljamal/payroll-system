@@ -52,7 +52,7 @@ public class TimeReportService {
     private String getReportId(MultipartFile multipartFile) {
         return multipartFile.getOriginalFilename().
                 replace("time-report-","").
-                replace(".csv","");
+                replace(".csv","").replace(" ", "");
     }
 
     private List<TimeReport> uploadTimeReportFromFile(MultipartFile multipartFile, String reportId) throws Exception {
