@@ -32,6 +32,18 @@ public class PayrollServiceIntegrationTest {
 
     private Gson gson = new Gson();
 
+    @Test(expected = Exception.class)
+    public void testUploadSameFileMultipleTimes() throws Exception{
+        String timeReportFile = new File(".").getCanonicalPath()+
+                "/src/test/resources/time-report-43.csv";
+        FileInputStream fileInputStream = new FileInputStream(new File(timeReportFile));
+        multipart = new MockMultipartFile("time-report-43.csv",
+                "time-report-43.csv", "multipart/form-data", fileInputStream);
+
+        timeReportService.save(multipart);
+        timeReportService.save(multipart);
+    }
+
     @Test
     public void testGetPayrollReport() throws Exception {
         String timeReportFile = new File(".").getCanonicalPath()+
