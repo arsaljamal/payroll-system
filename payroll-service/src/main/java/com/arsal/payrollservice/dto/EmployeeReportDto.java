@@ -40,4 +40,13 @@ public class EmployeeReportDto {
     public void setAmountPaid(Double amountPaid) {
         this.amountPaid = amountPaid;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "employeeId='" + employeeId + '\'' +
+                ", payPeriod=" + payPeriodDto +
+                ", amountPaid=" + amountPaid +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package com.arsal.payrollservice.controller;
 import com.arsal.payrollservice.dto.PayrollReportDto;
 import com.arsal.payrollservice.service.PayrollReportService;
 import com.arsal.payrollservice.service.TimeReportService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(path = "payroll")
 public class PayrollController {
+
+    private Gson gson = new Gson();
 
     private final TimeReportService timeReportService;
 
@@ -26,12 +29,12 @@ public class PayrollController {
     @PostMapping(path = "/upload")
     public ResponseEntity<String> uploadMultiPartFile(@RequestParam("file") MultipartFile multiPartFile) throws Exception {
         timeReportService.save(multiPartFile);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>(gson.toJson("Success"), HttpStatus.OK);
     }
 
     @GetMapping(path = "/report")
-    public ResponseEntity<PayrollReportDto> getPayrollReport() {
+    public ResponseEntity<String> getPayrollReport() {
         PayrollReportDto payrollReportDto = payrollReportService.findAll();
-        return new ResponseEntity<>(payrollReportDto, HttpStatus.OK);
+        return new ResponseEntity<>(gson.toJson(payrollReportDto), HttpStatus.OK);
     }
 }

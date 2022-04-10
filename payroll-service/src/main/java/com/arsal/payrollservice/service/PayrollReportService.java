@@ -34,7 +34,7 @@ public class PayrollReportService {
         PayrollReportDto payrollReportDto = new PayrollReportDto();
         List<EmployeeReportDto> employeeReportDtoList = new ArrayList<>();
 
-        List<PayrollReport> payrollReportList = payrollReportRepository.findAll();
+        List<PayrollReport> payrollReportList = payrollReportRepository.findAllOrderedByEmployeeIdAndStartDate();
         for (PayrollReport payrollReport : payrollReportList) {
             EmployeeReportDto employeeReportDto = new EmployeeReportDto();
             PayPeriodDto payPeriodDto = new PayPeriodDto(payrollReport.getStartDate(), payrollReport.getEndDate());

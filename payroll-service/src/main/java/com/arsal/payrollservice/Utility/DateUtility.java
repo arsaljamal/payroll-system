@@ -19,7 +19,9 @@ public class DateUtility {
     }
 
     public static PayPeriodDto getPayPeriod(Date date) {
-        LocalDate localDate = LocalDate.parse(date.toString());
+        LocalDate localDate = date.toInstant()
+                .atZone(defaultZoneId)
+                .toLocalDate();
         LocalDate startDate = null;
         LocalDate endDate = null;
         if(localDate.getDayOfMonth() > 15) {
@@ -36,7 +38,9 @@ public class DateUtility {
 
 
     public static String getPayPeriod(Date date, String employeeId) {
-        LocalDate localDate = LocalDate.parse(date.toString());
+        LocalDate localDate = date.toInstant()
+                .atZone(defaultZoneId)
+                .toLocalDate();
         LocalDate startDate = null;
         LocalDate endDate = null;
         if(localDate.getDayOfMonth() > 15) {

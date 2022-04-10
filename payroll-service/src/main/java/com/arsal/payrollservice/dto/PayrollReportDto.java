@@ -21,4 +21,12 @@ public class PayrollReportDto {
     public void setEmployeeReportDtoList(List<EmployeeReportDto> employeeReportDtoList) {
         this.employeeReportDtoList = employeeReportDtoList;
     }
+
+    @Override
+    public String toString() {
+        return "{ payrollReport : {" +
+                "employeeReports : [" + employeeReportDtoList +
+                ']' +
+                "}";
+    }
 }

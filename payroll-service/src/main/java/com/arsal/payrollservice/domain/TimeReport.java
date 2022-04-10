@@ -11,7 +11,7 @@ public class TimeReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="report_id", nullable = false, unique = true)
+    @Column(name="report_id", nullable = false)
     private String reportId;
 
     @Column(name="employee_id", nullable = false)

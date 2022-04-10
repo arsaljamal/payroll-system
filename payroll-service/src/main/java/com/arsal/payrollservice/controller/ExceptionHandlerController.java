@@ -1,6 +1,8 @@
 package com.arsal.payrollservice.controller;
 
+import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -12,9 +14,11 @@ import java.util.logging.Logger;
 public class ExceptionHandlerController {
     private Logger logger = Logger.getLogger(String.valueOf(ExceptionHandlerController.class));
 
+    private Gson gson = new Gson();
+
     @ExceptionHandler(Exception.class)
-    public void handleException(Exception ex, HttpServletResponse res) throws IOException {
+    public ResponseEntity<String> handleException(Exception ex, HttpServletResponse res) throws IOException {
         logger.info("Handled Internal Error Exception : " + ex.getMessage());
-        res.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        return new ResponseEntity<>(gson.toJson(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
