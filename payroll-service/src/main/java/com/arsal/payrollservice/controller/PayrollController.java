@@ -33,8 +33,8 @@ public class PayrollController {
     }
 
     @GetMapping(path = "/report")
-    public ResponseEntity<String> getPayrollReport() {
+    public ResponseEntity<PayrollReportDto> getPayrollReport() {
         PayrollReportDto payrollReportDto = payrollReportService.findAll();
-        return new ResponseEntity<>(gson.toJson(payrollReportDto), HttpStatus.OK);
+        return new ResponseEntity<>(payrollReportDto, HttpStatus.OK);
     }
 }
