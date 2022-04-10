@@ -6,6 +6,10 @@ public class PayrollReportDto {
 
     public List<EmployeeReportDto> employeeReportDtoList;
 
+
+    public PayrollReportDto() {
+    }
+
     public PayrollReportDto(List<EmployeeReportDto> employeeReportDtoList) {
         this.employeeReportDtoList = employeeReportDtoList;
     }

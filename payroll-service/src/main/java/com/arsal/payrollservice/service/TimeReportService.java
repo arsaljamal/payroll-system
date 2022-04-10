@@ -1,7 +1,9 @@
 package com.arsal.payrollservice.service;
 
 import com.arsal.payrollservice.Utility.DateUtility;
+import com.arsal.payrollservice.domain.PayrollReport;
 import com.arsal.payrollservice.domain.TimeReport;
+import com.arsal.payrollservice.dto.PayPeriodDto;
 import com.arsal.payrollservice.repo.TimeReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -42,7 +46,28 @@ public class TimeReportService {
 
         List<TimeReport> timeReportList = uploadTimeReportFromFile(multipartFile, reportId);
         timeReportList = timeReportRepository.saveAll(timeReportList);
-        payrollReportService.save(timeReportList);
+
+        Map<String, PayrollReport> payrollReportMap = new HashMap<>();
+        for (TimeReport timeReport : timeReportList) {
+            String payPeriodKey = DateUtility.getPayPeriod(timeReport.getDate(), timeReport.getEmployeeId());
+            if (payrollReportMap.containsKey(payPeriodKey)) {
+                PayrollReport payrollReport = payrollReportMap.get(payPeriodKey);
+                payrollReport.setAmountPaid(payrollReport.getAmountPaid() +
+                        (timeReport.getHoursWorked() * timeReport.getJobGroup().getRate()));
+                payrollReportMap.put(payPeriodKey, payrollReport);
+            } else {
+                PayPeriodDto payPeriodDto = DateUtility.getPayPeriod(timeReport.getDate());
+                PayrollReport payrollReport = new PayrollReport();
+                payrollReport.setReportId(timeReport.getReportId());
+                payrollReport.setEmployeeId(timeReport.getEmployeeId());
+                payrollReport.setStartDate(payPeriodDto.getStartDate());
+                payrollReport.setEndDate(payPeriodDto.getEndDate());
+                payrollReport.setAmountPaid(timeReport.getHoursWorked() * timeReport.getJobGroup().getRate());
+                payrollReportMap.put(payPeriodKey, payrollReport);
+            }
+        }
+
+        payrollReportService.save(payrollReportMap);
     }
 
     private String getReportId(MultipartFile multipartFile) {

@@ -6,9 +6,12 @@ public class EmployeeReportDto {
 
     public PayPeriodDto payPeriodDto;
 
-    public String amountPaid;
+    public Double amountPaid;
 
-    public EmployeeReportDto(String employeeId, PayPeriodDto payPeriodDto, String amountPaid) {
+    public EmployeeReportDto() {
+    }
+
+    public EmployeeReportDto(String employeeId, PayPeriodDto payPeriodDto, Double amountPaid) {
         this.employeeId = employeeId;
         this.payPeriodDto = payPeriodDto;
         this.amountPaid = amountPaid;
@@ -30,11 +33,11 @@ public class EmployeeReportDto {
         this.payPeriodDto = payPeriodDto;
     }
 
-    public String getAmountPaid() {
+    public Double getAmountPaid() {
         return amountPaid;
     }
 
-    public void setAmountPaid(String amountPaid) {
+    public void setAmountPaid(Double amountPaid) {
         this.amountPaid = amountPaid;
     }
 }

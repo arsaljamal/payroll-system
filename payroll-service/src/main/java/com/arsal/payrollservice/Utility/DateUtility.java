@@ -33,4 +33,19 @@ public class DateUtility {
         return new PayPeriodDto(getDate(startDate.format(formatter)),
                 getDate(endDate.format(formatter)));
     }
+
+
+    public static String getPayPeriod(Date date, String employeeId) {
+        LocalDate localDate = LocalDate.parse(date.toString());
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        if(localDate.getDayOfMonth() > 15) {
+            startDate = localDate.withDayOfMonth(16);
+            endDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+        } else {
+            startDate = localDate.withDayOfMonth(1);
+            endDate = localDate.withDayOfMonth(15);
+        }
+        return employeeId +"-"+ startDate.format(formatter) +"-" + endDate.format(formatter);
+    }
 }
