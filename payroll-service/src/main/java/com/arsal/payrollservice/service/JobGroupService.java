@@ -35,7 +35,6 @@ public class JobGroupService {
     }
 
     public JobGroup find(String name) {
-        JobGroup jobGroup = jobGroupReportRepository.findByName(name);
-        return jobGroup;
+        return jobGroupReportRepository.findByName(name);
     }
 }
