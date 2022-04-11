@@ -1,0 +1,10 @@
+version: '2'
+services:
+
+  payroll-service:
+    container_name: payroll-service
+    build:
+      context: ./payroll-service
+      dockerfile: DockerFile
+    ports:
+      - "8080:8080"
