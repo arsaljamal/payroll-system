@@ -25,7 +25,7 @@ As requested in the challenge description, the API has two endpoints, one for up
 
 ### Uploading Time Reports
 
-The upload endpoint is setup as a multipart form with one field "file",  which allows you to provide a file path to the time-report you want to upload. You can send a request to the upload endpoint by opening the command line, navigating to the location of the sample time report (payroll-service/src/test/resources/time-report-42.csv) and running the following command.
+The upload endpoint is setup as a multipart form with one field "file",  which allows you to provide a file path to the time-report you want to upload. You can send a request to the upload endpoint by opening the command line, navigating to the location of the sample time report `(payroll-service/src/test/resources/time-report-42.csv)` and running the following command.
 
 Request: 
 
@@ -176,21 +176,18 @@ Response (after uploading sample time report):
 
 ## Running Tests
 
-In order to run the tests we can change here https://github.com/arsaljamal/payroll-system/blob/3c507652a0ffc9cbad07fcd9e4b1d63d88dc1b72/payroll-service/DockerFile#L6 :
+In order to run the tests we can change here https://github.com/arsaljamal/payroll-system/blob/3c507652a0ffc9cbad07fcd9e4b1d63d88dc1b72/payroll-service/DockerFile#L6 
 
-from 
-```
-RUN mvn -DskipTests package
-```
 to
 ```
 RUN mvn package
 ```
+
 This will run all the tests before the project is built.
 
 ## Additional Details
 
-1. How did you test that your implementation was correct?
+### 1. How did you test that your implementation was correct?
 
 Before writing any of the implementation, I started the project by first leveraging the time-report and expected payroll report in the challenge description above to write a unit test.
 
@@ -200,7 +197,7 @@ As I began to write the code, I ensured that the tests for the relevant code are
 
 Furthermore, I tested my API manually by submitting the sample time-report and verifying that the returned payroll report matched what I expected.
 
-2. If this application was destined for a production environment, what would you add or change? 
+### 2. If this application was destined for a production environment, what would you add or change? 
 
 The most pressing issue to be resolved before deployment to a production environment are the hard-coded database credentials. Given that hard-coding credentials into source code is generally considered insecure, and a potential vector for attack, I would likely leverage a secret management tool to retrieve the credentials at runtime.
 
@@ -214,7 +211,7 @@ While scoping payroll report requests helps, it does not solve the problem of re
 
 Given how expensive the payroll report request can be, it also makes sense to put in place some rate limiting. This way we avoid situations where a large number of expensive requests within a short time period, causes performance issues. 
 
-3. What compromises did you have to make as a result of the time constraints of this challenge?
+### 3. What compromises did you have to make as a result of the time constraints of this challenge?
 
 In addition to the items I discussed above, there are several areas where I made compromises for the sake of time.
 
