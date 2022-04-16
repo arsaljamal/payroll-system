@@ -12,4 +12,8 @@ public interface PayrollReportRepository extends JpaRepository<PayrollReport, Lo
 
     @Query(value = "SELECT p from PayrollReport p order by p.employeeId asc , p.startDate asc ")
     List<PayrollReport> findAllOrderedByEmployeeIdAndStartDate();
+
+    Boolean existsByEmployeePayPeriodId(String employeePayPeriodId);
+
+    PayrollReport findByEmployeePayPeriodId(String employeePayPeriodId);
 }

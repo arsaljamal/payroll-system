@@ -8,6 +8,8 @@ import com.arsal.payrollservice.repo.PayrollReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +26,19 @@ public class PayrollReportService {
         this.payrollReportRepository = payrollReportRepository;
     }
 
+    @Transactional
     public void save(Map<String, PayrollReport> payrollReportMap) {
         logger.info("Request to create payroll-report.");
-        payrollReportRepository.saveAll(payrollReportMap.values());
+        for(PayrollReport payrollReport : payrollReportMap.values()) {
+            if (payrollReportRepository.existsByEmployeePayPeriodId(payrollReport.getEmployeePayPeriodId())) {
+                PayrollReport payrollReportToPersist = payrollReportRepository.findByEmployeePayPeriodId(payrollReport.getEmployeePayPeriodId());
+                Double totalAmount = payrollReportToPersist.getAmountPaid().doubleValue() + payrollReport.getAmountPaid().doubleValue();
+                payrollReportToPersist.setAmountPaid(BigDecimal.valueOf(totalAmount));
+            } else {
+                payrollReportRepository.save(payrollReport);
+            }
+        }
+
     }
 
     public PayrollReportDto findAll() {

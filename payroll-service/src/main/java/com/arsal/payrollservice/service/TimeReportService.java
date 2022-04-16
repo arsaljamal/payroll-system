@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,17 +53,17 @@ public class TimeReportService {
             String payPeriodKey = DateUtility.getPayPeriod(timeReport.getDate(), timeReport.getEmployeeId());
             if (payrollReportMap.containsKey(payPeriodKey)) {
                 PayrollReport payrollReport = payrollReportMap.get(payPeriodKey);
-                payrollReport.setAmountPaid(payrollReport.getAmountPaid() +
-                        (timeReport.getHoursWorked() * timeReport.getJobGroup().getRate()));
+                payrollReport.setAmountPaid(BigDecimal.valueOf(payrollReport.getAmountPaid().doubleValue()
+                        + timeReport.getHoursWorked() * timeReport.getJobGroup().getRate()));
                 payrollReportMap.put(payPeriodKey, payrollReport);
             } else {
                 PayPeriodDto payPeriodDto = DateUtility.getPayPeriod(timeReport.getDate());
                 PayrollReport payrollReport = new PayrollReport();
-                payrollReport.setReportId(timeReport.getReportId());
+                payrollReport.setEmployeePayPeriodId(payPeriodKey);
                 payrollReport.setEmployeeId(timeReport.getEmployeeId());
                 payrollReport.setStartDate(payPeriodDto.getStartDate());
                 payrollReport.setEndDate(payPeriodDto.getEndDate());
-                payrollReport.setAmountPaid(timeReport.getHoursWorked() * timeReport.getJobGroup().getRate());
+                payrollReport.setAmountPaid(BigDecimal.valueOf(timeReport.getHoursWorked() * timeReport.getJobGroup().getRate()));
                 payrollReportMap.put(payPeriodKey, payrollReport);
             }
         }

@@ -1,6 +1,7 @@
 package com.arsal.payrollservice.domain;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -11,14 +12,14 @@ public class PayrollReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="report_id", nullable = false)
-    private String reportId;
-
     @Column(name="employee_id", nullable = false)
     private String employeeId;
 
+    @Column(name="employee_pay_period_id", unique = true, nullable = false)
+    private String employeePayPeriodId;
+
     @Column(name = "amount_paid")
-    private Double amountPaid;
+    private BigDecimal amountPaid;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start_date", nullable = false)
@@ -31,9 +32,9 @@ public class PayrollReport {
     public PayrollReport() {
     }
 
-    public PayrollReport(String reportId, String employeeId, Double amountPaid, Date startDate, Date endDate) {
-        this.reportId = reportId;
+    public PayrollReport(String employeeId, String employeePayPeriodId, BigDecimal amountPaid, Date startDate, Date endDate) {
         this.employeeId = employeeId;
+        this.employeePayPeriodId = employeePayPeriodId;
         this.amountPaid = amountPaid;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -47,14 +48,6 @@ public class PayrollReport {
         this.id = id;
     }
 
-    public String getReportId() {
-        return reportId;
-    }
-
-    public void setReportId(String reportId) {
-        this.reportId = reportId;
-    }
-
     public String getEmployeeId() {
         return employeeId;
     }
@@ -63,11 +56,19 @@ public class PayrollReport {
         this.employeeId = employeeId;
     }
 
-    public Double getAmountPaid() {
+    public String getEmployeePayPeriodId() {
+        return employeePayPeriodId;
+    }
+
+    public void setEmployeePayPeriodId(String employeePayPeriodId) {
+        this.employeePayPeriodId = employeePayPeriodId;
+    }
+
+    public BigDecimal getAmountPaid() {
         return amountPaid;
     }
 
-    public void setAmountPaid(Double amountPaid) {
+    public void setAmountPaid(BigDecimal amountPaid) {
         this.amountPaid = amountPaid;
     }
 
