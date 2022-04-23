@@ -2,7 +2,7 @@
 
 ## Build and run using Docker
 
-### Required Depdencies
+### Required Dependencies
 
 1. Docker ([macOS](https://docs.docker.com/desktop/mac/install/)/[Linux](https://docs.docker.com/engine/install/#server)))
 
@@ -195,7 +195,7 @@ Initially the integration test only tested the external API by sending in the ti
 
 As I began to write the code, I ensured that the end to end code flow was working, and that the outcome of my code was as expected.
 
-Furthermore, I tested my API manually by submitting the sample time-report and verifying that the returned payroll report matched what I expected.
+Furthermore, I tested my API manually by submitting the sample time-report and verifying that the returned payroll report matched with what I expected.
 
 ### 2. If this application was destined for a production environment, what would you add or change? 
 
